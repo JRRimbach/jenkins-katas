@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'host'
+    }
+
+  }
   stages {
     stage('Parallel execution') {
       parallel {
