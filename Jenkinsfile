@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    node {
-      label 'host'
-    }
-
-  }
+  agent any
   stages {
     stage('clone down') {
       agent {
