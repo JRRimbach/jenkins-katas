@@ -35,6 +35,7 @@ pipeline {
             unstash 'code'
             sh 'ci/build-app.sh'
             archiveArtifacts 'app/build/libs/'
+            stash(name: 'code2', excludes: '.git')
           }
         }
 
@@ -46,7 +47,7 @@ pipeline {
         DOCKERCREDS = credentials('docker_login')
       }
       steps {
-        unstash 'code'
+        unstash 'code2'
         sh 'ci/build-docker.sh'
         sh 'sh \'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin\' //login to docker '
         sh 'sh \'ci/push-docker.sh\''
