@@ -50,6 +50,14 @@ pipeline {
         unstash 'code2'
         sh 'ci/build-docker.sh'
         sh 'sh \'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin\' //login to docker '
+      }
+    }
+
+    stage('push docker') {
+      when {
+        branch 'master'
+      }
+      steps {
         sh 'sh \'ci/push-docker.sh\''
       }
     }
