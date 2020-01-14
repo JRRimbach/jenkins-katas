@@ -57,7 +57,11 @@ pipeline {
       when {
         branch 'master'
       }
+      environment {
+        DOCKERCREDS = credentials('docker_login')
+      }
       steps {
+        sh 'sh \'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin\' //login to docker '
         sh 'sh \'ci/push-docker.sh\''
       }
     }
